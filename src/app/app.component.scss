@@ -1,0 +1,53 @@
+.drop-above {
+    border-top: 40px solid #dddddd;
+    margin-top: -10px;
+    opacity: 0.4;
+  }
+  
+  .drop-below {
+    border-bottom: 40px solid #dddddd;
+    margin-bottom: -10px;
+    opacity: 0.4;
+  }
+  
+  .drop-center {
+    border: 1px solid black;
+    opacity: 0.4;
+  
+  }
+  
+  .mani{
+    cursor: move;
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+  }
+  
+  .group-font{
+    font-weight: bold;
+  }
+  .mani.over{
+    border: 3px dotted #666;
+  }
+  
+  [draggable] {
+    user-select: none;
+  }
+  
+  .divide {
+    margin: 5px;
+  }
+
+  .mat-mdc-form-field {
+    margin-right: 4px;
+  }
+
+  .f-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .jso{
+    width: 500px;
+  }
