@@ -154,6 +154,9 @@ export class DragService {
     else{
       newItem = {item:name, type, sequenceId, children:[]};
     }
+    if(parent.type == 1 && from.type ==1 && !from.children.some(child => child.type==2)){
+      newItem.type = 2
+    }
     if(newItem.type == 2){
       parent.children.push(newItem);
     }
@@ -172,6 +175,12 @@ export class DragService {
   insertItemAboveOrBelow(node:Node, from: Node, operation: number): Node{
     const parentNode = this.getParentFromNodes(node);
     const newItem: Node = { ...from, children: undefined }
+    if(from.type == 2  && node.type ==1){
+      newItem.type = 1;
+    }
+    if(from.type == 1 && node.type ==2 ){
+      newItem.type = 2;
+    }
     if (parentNode != null) {
       if(operation == 1){
         parentNode.children.splice(parentNode.children.indexOf(node), 0, newItem);

@@ -30,7 +30,8 @@
   </div>
 </div>
 <p> Selected Nodes: {{checklistSelection.selected.length}}</p>
-<mat-tree class="divide" [dataSource]="dataSource" [treeControl]="treeControl">
+
+<!-- <mat-tree class="divide" [dataSource]="dataSource" [treeControl]="treeControl">
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding [matTreeNodePaddingIndent]="60">
     <div class="checklist-leaf-node mani" [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === node,
     'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === node,
@@ -40,7 +41,7 @@
       <mat-checkbox color="primary" [checked]="checklistSelection.isSelected(node)"
         (change)="checklistSelection.toggle(node);"></mat-checkbox>
       &nbsp;{{node.item}}
-      <!-- level:{{node.level}} type:{{node.type}} active: {{node.isActive}} -->
+      level:{{node.level}} type:{{node.type}} active: {{node.isActive}}
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -78,7 +79,7 @@
         </mat-icon>
       </button>
       &nbsp;{{node.item}}
-      <!-- level:{{node.level}} type:{{node.type}} Active: {{node.isActive}} -->
+      level:{{node.level}} type:{{node.type}} Active: {{node.isActive}}
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -87,11 +88,70 @@
         <button mat-menu-item color="primary" (click)="rename(node)"> Rename</button>
         <button mat-menu-item color="warn" (click)="delete(node)"> Delete</button>
       </mat-menu>
-      <!-- <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button> -->
     </div>
   </mat-tree-node>
-</mat-tree>
-<!-- <div class="jso">
-{{dataSource.data | json}}
-</div> -->
+</mat-tree> -->
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>
+      <span [style.paddingLeft.px]="40"> Name </span>
+    </th>
+    <td mat-cell *matCellDef="let data">
+      <div class="mani">
+        <mat-checkbox color="primary" [style.marginLeft.px]="data.level * 32 * 2"
+      [checked]="checklistSelection.isSelected(data)"
+      [indeterminate]="descendantsPartiallySelected(data)"
+      (change)="todoItemSelectionToggle(data)"></mat-checkbox>
+        <button mat-icon-button *ngIf="data.expandable"
+          (click)="treeControl.toggle(data)">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(data) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        
+        {{data.item}}
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="count">
+    <th mat-header-cell *matHeaderCellDef> Count </th>
+    <td mat-cell *matCellDef="let data"> 1 </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Modified">
+    <th mat-header-cell *matHeaderCellDef> Modified </th>
+    <td mat-cell *matCellDef="let data"> Trinadh </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Activated/Deactivated">
+    <th mat-header-cell *matHeaderCellDef> Activated/Deactivated </th>
+    <td mat-cell *matCellDef="let data"> Sep 3, Trinadh </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Action">
+    <th mat-header-cell *matHeaderCellDef> Action </th>
+    <td mat-cell *matCellDef="let data"> 
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" overlapTrigger="false">
+        <button *ngIf="data.type==3 && !data.isActive" mat-menu-item color="accent"
+          (click)="updateActiveStatus(data,true)">Activate</button>
+        <button *ngIf="data.type==3 && data.isActive" mat-menu-item color="accent"
+          (click)="updateActiveStatus(data,false)">Deactivate</button>
+        <button mat-menu-item color="accent" *ngIf="data.type==1" (click)="addSubGroup(data)"> Add Sub Group </button>
+        <button mat-menu-item color="primary" (click)="rename(data)"> Rename</button>
+        <button mat-menu-item color="warn" (click)="delete(data)"> Delete</button>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr class="checklist-leaf-node" [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === data,
+  'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === data,
+  'drop-center': dragNodeExpandOverArea === 'center' && dragNodeExpandOverNode === data,
+  'group-font': data.type !==3}" draggable="true" (dragstart)="handleDragStart($event, data);"
+(dragover)="handleDragOver($event, data);" (drop)="handleDrop($event, data);" (dragend)="handleDragEnd($event);" mat-row *matRowDef="let data; columns: displayedColumns;"></tr>
+</table>
 <span #emptyItem></span>

@@ -66,6 +66,7 @@ export class AppComponent {
   dragNodeExpandOverNode: any;
   dragNodeExpandOverTime: number;
   dragNodeExpandOverArea: string;
+  displayedColumns: string[] = ['name', 'count', 'Modified', 'Activated/Deactivated','Action'];
 
   @ViewChild('emptyItem') emptyItem: ElementRef;
 
@@ -128,6 +129,7 @@ export class AppComponent {
    */
   descendantsAllSelected(node: FlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
+    console.log(descendants)
     if (descendants.length > 0) {
       return descendants.every(child => this.checklistSelection.isSelected(child));
     }
@@ -150,12 +152,14 @@ export class AppComponent {
    * @param node 
    */
   todoItemSelectionToggle(node: FlatNode): void {
+    console.log(node)
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
+    console.log(descendants)
+    console.log(this.checklistSelection)
     this.checklistSelection.isSelected(node)
       ? this.checklistSelection.select(...descendants)
       : this.checklistSelection.deselect(...descendants);
-    console.log(this.checklistSelection.selected.filter(item => item.type))
   }
 
   /**
@@ -205,6 +209,8 @@ export class AppComponent {
     event.preventDefault();
     event.stopPropagation();
 
+    console.log(event)
+    console.log(node)
     this.dragNodeExpandOverNode = node;
     this.dragNodeExpandOverTime = new Date().getTime();
     const percentageY = event.offsetY / event.target.clientHeight;

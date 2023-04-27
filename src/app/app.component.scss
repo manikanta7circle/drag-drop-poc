@@ -1,20 +1,19 @@
-.drop-above {
-    border-top: 40px solid #dddddd;
-    margin-top: -10px;
-    opacity: 0.4;
-  }
+// .drop-above {
+//     border-top: 40px solid #dddddd;
+//     margin-top: -10px;
+//     opacity: 0.4;
+//   }
   
-  .drop-below {
-    border-bottom: 40px solid #dddddd;
-    margin-bottom: -10px;
-    opacity: 0.4;
-  }
+  // .drop-below {
+  //   border-bottom: 40px solid #dddddd;
+  //   margin-bottom: -10px;
+  //   opacity: 0.4;
+  // }
   
-  .drop-center {
-    border: 1px solid black;
-    opacity: 0.4;
-  
-  }
+  // .drop-center {
+  //   border: 1px solid black;
+  //   opacity: 0.4;
+  // }
   
   .mani{
     cursor: move;
@@ -23,6 +22,9 @@
     align-items: center;    
   }
   
+  .mani-table{
+    cursor: move;
+  }
   .group-font{
     font-weight: bold;
   }
@@ -51,3 +53,47 @@
   .jso{
     width: 500px;
   }
+
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+
+ ::ng-deep .drop-above {
+  .mat-mdc-row{
+    border-top: 40px solid #dddddd !important;
+    margin-top: -10px;
+    opacity: 0.4;
+  } .mat-mdc-cell {
+    border-top: 40px solid #dddddd !important;
+    margin-top: -10px;
+    opacity: 0.4;
+  }
+}
+  
+::ng-deep .drop-below {
+  .mat-mdc-row{
+    border-bottom: 40px solid #dddddd !important;
+    margin-bottom: -10px;
+    opacity: 0.4;
+  } .mat-mdc-cell {
+    border-bottom: 40px solid #dddddd !important;
+    margin-bottom: -10px;
+    opacity: 0.4;
+  }
+}
+
+::ng-deep  .drop-center {
+  .mat-mdc-row{
+    border: 1px solid black !important;
+    opacity: 0.4;
+  } .mat-mdc-cell {
+    border: 1px solid black !important;
+    opacity: 0.4;
+  }
+}
+
+.tr{
+  border: 2px solid !important;
+}
